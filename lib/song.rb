@@ -1,5 +1,8 @@
 class Song
   extend Concerns::Findable
+  extend Concerns::Memorable::ClassMethods
+  include Concerns::Memorable::InstanceMethods
+
   attr_accessor :name
   @@all = []
 
@@ -11,20 +14,6 @@ class Song
 
   def self.all
     @@all 
-  end
-
-  def save
-    @@all << self
-  end
-
-  def self.destroy_all
-    @@all.clear
-  end
-
-  def self.create(name)
-    self.new(name).tap do |el|
-      el.save
-    end
   end
 
   def artist
@@ -59,9 +48,5 @@ class Song
     song = self.new_from_filename(filename)
     @@all << song
   end 
-
-  # def self.sort_by_name
-  #   self.all.sort_by {|el| el.name}
-  # end
 
 end

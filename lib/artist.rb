@@ -1,5 +1,8 @@
 class Artist
   extend Concerns::Findable
+  extend Concerns::Memorable::ClassMethods
+  include Concerns::Memorable::InstanceMethods
+
   attr_accessor :name
   @@all = []
 
@@ -11,20 +14,6 @@ class Artist
   def self.all
     @@all 
   end
-
-  def save
-    @@all << self
-  end
-
-  def self.destroy_all
-    @@all.clear
-  end
-
-  def self.create(name)
-    self.new(name).tap do |el|
-      el.save
-    end
-  end 
   
   def add_song(song)
     unless song.artist == self
