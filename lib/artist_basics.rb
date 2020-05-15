@@ -24,6 +24,19 @@ class Artist
     @song << song
     song.artist = artist
   end
+  
+  def songs
+    Song.all.select {|song| song.artist == self}
+  end 
+  
+  def new_song(name, genre)
+    Song.new(name, self, genre)
+  end
+  
+  #How one class talks to another
+  def genres
+    songs.map {|song| song.genre}
+  end 
  
   
 end
