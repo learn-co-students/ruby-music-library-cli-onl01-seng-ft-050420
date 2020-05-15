@@ -26,6 +26,10 @@ class Song
     song = Song.new(name, artist=nil, genre=nil)
   end
   
+  def artist=(artist)
+    @artist = artist
+    artist.add_song(self)
+  end
 
   
 end
