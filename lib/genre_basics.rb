@@ -6,6 +6,7 @@ class Genre
   def initialize(name)
     @name = name
     save
+    @songs = []
   end
   
   def self.all
@@ -26,13 +27,22 @@ class Genre
     genre
   end
   
-#  def songs 
-#    Song.all.select {|song| song.genre == self}
-#  end
+  def songs
+    @songs
+  end
+  
+  def add_song(song, genre = self)
+    @songs << song if !@songs.include?(song)
+  end
   
   #How one class talks to another
-#  def artists
-#    songs.map {|song| song.artist}
+  def artists
+    uniq_artists = songs.map {|song| song.artist}
+    uniq_artists.uniq
+  end
+  
+#  def songs 
+#    Song.all.select {|song| song.genre == self}
 #  end
   
 end

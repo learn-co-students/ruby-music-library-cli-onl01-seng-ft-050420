@@ -37,15 +37,17 @@ class Artist
     song.artist = artist if song.artist == nil 
   end
 
+  #How one class talks to another
+  def genres
+    uniq_genres = songs.map {|song| song.genre}
+    uniq_genres.uniq
+  end 
+ 
   
 #  def new_song(name, genre)
 #    Song.new(name, self, genre)
 #  end
   
-  #How one class talks to another
-#  def genres
-#    songs.map {|song| song.genre}
-#  end 
- 
+
 #Song.all.select {|song| song.artist == self}
 end
