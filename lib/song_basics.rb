@@ -20,10 +20,12 @@ class Song
     self.class.all << self
   end
   
-  def create(name)
-    @name = name
-    save
-    name
+  def self.create(name)
+    song = Song.new(name)
+    song.save
+    song
   end
   
 end
+
+# ruby spec/001_song_basics_spec.rb
