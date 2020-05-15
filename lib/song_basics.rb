@@ -44,6 +44,21 @@ class Song
     find_by_name(song) || create(song)
   end
   
+  def self.new_from_filename(file)
+    song_inst = file.split(" - ")[1]
+    artist_inst = file.split(" - ")[0]
+    genre_inst = file.split(" - ")[2].chomp(".mp3")
+    song = self.find_or_create_by_name(song_inst)
+    song.artist = Artist.find_or_create_by_name(artist_inst)
+    song.genre = Genre.find_or_create_by_name(genre_inst)
+    song
+  end
+  
+  def self.create_from_filename(file)
+    @@all << self.new_from_filename(file)
+  end
+  
+  
 end
 
 # ruby spec/001_song_basics_spec.rb
