@@ -17,7 +17,7 @@ class Genre
   end
   
   def self.destroy_all
-    @@all.clear
+    self.all.clear
   end
   
   def self.create(name)
@@ -26,13 +26,13 @@ class Genre
     genre
   end
   
-  def songs 
-    Song.all.select {|song| song.genre == self}
-  end
+#  def songs 
+#    Song.all.select {|song| song.genre == self}
+#  end
   
   #How one class talks to another
-  def artists
-    songs.map {|song| song.artist}
-  end
+#  def artists
+#    songs.map {|song| song.artist}
+#  end
   
 end

@@ -1,13 +1,13 @@
 class Artist 
- attr_accessor :name 
+ attr_accessor :name, :songs 
   
   @@all = []
   
   
   def initialize(name)
-    @songs = []
     @name = name
     save
+    @songs = []
   end
   
   def self.all
@@ -15,7 +15,7 @@ class Artist
   end
   
   def self.destroy_all
-    @@all.clear
+    self.all.clear
   end
   
   def save
@@ -29,24 +29,23 @@ class Artist
   end
   
   def songs
-    Song.all.select {|song| song.artist == self}
+    @songs
   end 
-  
-  
   
   def add_song(song, artist = self)
-    @song << song
-    song.artist = artist
+    @songs << song if !@songs.include?(song)
+    song.artist = artist if song.artist == nil 
   end
+
   
-  def new_song(name, genre)
-    Song.new(name, self, genre)
-  end
+#  def new_song(name, genre)
+#    Song.new(name, self, genre)
+#  end
   
   #How one class talks to another
-  def genres
-    songs.map {|song| song.genre}
-  end 
+#  def genres
+#    songs.map {|song| song.genre}
+#  end 
  
-  
+#Song.all.select {|song| song.artist == self}
 end
