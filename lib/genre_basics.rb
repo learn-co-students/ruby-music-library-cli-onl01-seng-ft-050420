@@ -1,6 +1,7 @@
 class Genre 
   attr_accessor :name, :genre 
   attr_reader :song 
+  extend Concerns::Findable
   @@all = []
   
   def initialize(name)
