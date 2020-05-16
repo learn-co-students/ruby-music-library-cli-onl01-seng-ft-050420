@@ -61,4 +61,4 @@ class Song
   
 end
 
-# ruby spec/001_song_basics_spec.rb
+# rspec spec/001_song_basics_spec.rb
