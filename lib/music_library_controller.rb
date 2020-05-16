@@ -18,20 +18,21 @@ class MusicLibraryController
       puts "To play a song, enter 'play song'."
       puts "To quit, type 'exit'."
       puts "What would you like to do?"
+      
       input = gets.strip
       
       case input
-      when "list_songs"
+      when "list songs"
         list_songs
-      when "list_artists"
+      when "list artists"
         list_artists
-      when "list_genres"
+      when "list genres"
         list_genres
-      when "list_artists"
+      when "list artist"
         list_songs_by_artist
-      when "list_genre"
+      when "list genre"
         list_songs_by_genre      
-      when "play_song"
+      when "play song"
         play_song
       end
     end
@@ -45,12 +46,12 @@ class MusicLibraryController
   
   def list_artists
     sorted_songs = Artist.all.sort_by {|artist| artist.name}
-    sorted_songs.each {|artist, index| puts "#{index + 1}. #{artist.name}"}
+    sorted_songs.each_with_index {|artist, index| puts "#{index + 1}. #{artist.name}"}
   end 
   
   def list_genres
     sorted_songs = Genre.all.sort_by {|genre| genre.name}
-    sorted_songs.each {|genre, index| puts "#{index + 1}. #{genre.name}"}
+    sorted_songs.each_with_index {|genre, index| puts "#{index + 1}. #{genre.name}"}
   end
   
   def list_songs_by_artist
@@ -75,11 +76,12 @@ class MusicLibraryController
   
   def play_song
     puts "Which song number would you like to play?"
-    sorted_songs = Song.all.sort_by{|song| song.name}
+    sorted_songs = Song.all.sort_by {|song| song.name}
     
-    input.gets.strip.to_i 
+    
+    input = gets.strip.to_i 
     if (1..Song.all.length).include?(input)
-      song = sorted_songs[input]
+      song = sorted_songs[input - 1]
       puts "Playing #{song.name} by #{song.artist.name}"
     end
     
