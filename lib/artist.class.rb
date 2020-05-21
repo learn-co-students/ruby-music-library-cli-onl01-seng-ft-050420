@@ -10,8 +10,12 @@ class Artist
   end 
   
   def add_song(song)
-    song.artist = self if song.artist.nil?
+    song.artist = self if song.artist == nil
     self.songs << song if !self.songs.include?(song)
+  end 
+  
+  def genres 
+    self.songs.collect {|song| song.genre}.uniq
   end 
   
   def songs  
