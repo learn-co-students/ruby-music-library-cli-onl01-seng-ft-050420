@@ -43,6 +43,10 @@ class Song
   end 
   
   def self.find_or_create_by_name(name)
-    self.create(name) if !self.all.any? {|song| song.name == name}
+    if self.all.any? {|song| song.name == name} == true 
+      "does not recreate"
+    else 
+      self.create(name)
+    end 
   end 
 end 
