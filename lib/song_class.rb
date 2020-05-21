@@ -24,7 +24,11 @@ class Song
     self.new(name)
   end 
   
-  def artist=(name)
-    name.add_song(self)
+  def artist=(artist_name)
+    if Artist.all.include?(artist_name)
+      artist_name.add_song(self) 
+    else 
+      Artist.create(artist_name).add_song(self)
+    end 
   end 
 end 
