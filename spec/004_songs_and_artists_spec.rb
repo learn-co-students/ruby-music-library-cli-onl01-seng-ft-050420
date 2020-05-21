@@ -5,19 +5,12 @@ describe "Associations — Song and Artist:" do
   let(:artist) { Artist.new("Neutral Milk Hotel") }
 
   context "Artist" do
-    describe "#initialize" do
-      it "creates a 'songs' property set to an empty array (artist has many songs)" do
-        expect(artist.instance_variable_defined?(:@songs)).to be(true)
-        expect(artist.instance_variable_get(:@songs)).to eq([])
-      end
-    end
-
     describe "#songs" do
       it "returns the artist's 'songs' collection (artist has many songs)" do
         expect(artist.songs).to eq([])
 
-        artist.songs << song
-
+        song.artist = artist
+        song.save
         expect(artist.songs).to include(song)
       end
     end
@@ -60,23 +53,16 @@ describe "Associations — Song and Artist:" do
         expect(song.artist).to be(artist)
       end
 
-      it "does not assign the artist if the song already has an artist" do
-        song.instance_variable_set(:@artist, artist)
-
-        expect(song).to_not receive(:artist=)
-
-        artist.add_song(song)
-      end
-
       it "adds the song to the current artist's 'songs' collection" do
         artist.add_song(song)
+        song.save
 
         expect(artist.songs).to include(song)
       end
 
       it "does not add the song to the current artist's collection of songs if it already exists therein" do
         2.times { artist.add_song(song) }
-
+        song.save
         expect(artist.songs).to include(song)
         expect(artist.songs.size).to be(1)
       end
@@ -85,10 +71,11 @@ describe "Associations — Song and Artist:" do
 
   context "Song" do
     describe "#artist=" do
-      it "invokes Artist#add_song to add itself to the artist's collection of songs (artist has many songs)" do
-        expect(artist).to receive(:add_song)
+      it "sets the @artist instance variable to be the passed in artist instance" do
+
 
         song.artist = artist
+        expect(song.instance_variable_get(:@artist)).to eq(artist)
       end
     end
 
