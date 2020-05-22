@@ -70,9 +70,10 @@ class MusicLibraryController
     user_input = gets.chomp
     # valid = Artist.all.map { |artist| artist.name}
     if Artist.find_by_name(user_input)
-      Artist.find_by_name(user_input).songs 
+      songs = Artist.find_by_name(user_input).songs.sort_by { |song| song.name } 
+      songs.each.with_index(1) { |song, index| "#{index}. #{song.name}"}
     else 
-      # list_songs_by_artist
+      list_songs_by_artist
     end
 
   end
@@ -81,12 +82,6 @@ class MusicLibraryController
   end
   
   def play_song
-  end
-  
-  def list_songs_by_artist
-  end
-  
-  def list_songs_by_genre
   end
   
   
