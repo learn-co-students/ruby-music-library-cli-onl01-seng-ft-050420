@@ -41,6 +41,9 @@ class MusicLibraryController
       user_input == 'list_genres'
       list_genres
     elsif
+      user_input == 'list songs by artist'
+      list_songs_by_artist
+    elsif
       user_input == 'exit'
       # puts "Goodbye!"
       return
@@ -63,7 +66,11 @@ class MusicLibraryController
     sorted_genres.each.with_index(1) { |genre, index| puts "#{index}. #{genre}" }
   end
   
-  
+  def list_songs_by_artist 
+    puts "Please choose an artist"
+    input = gets.chomp
+    
+  end
   
   
   
