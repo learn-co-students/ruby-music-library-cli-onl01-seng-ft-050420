@@ -38,7 +38,7 @@ class MusicLibraryController
       user_input == 'list artists'
       list_artists
     elsif
-      user_input == 'list_genres'
+      user_input == 'list genres'
       list_genres
     elsif
       user_input == 'list songs by artist'
@@ -57,18 +57,24 @@ class MusicLibraryController
   end
   
   def list_artists
-    sorted_artists = Artist.all.map { |artist| artist.name }.sort
-    sorted_artists.each.with_index(1) { |artist, index| puts "#{index}. #{artist}" }
+    sorted_artists = Artist.all.sort_by { |artist| artist.name }
+    sorted_artists.each.with_index(1) { |artist, index| puts "#{index}. #{artist.name}" }
   end
   
   def list_genres 
-    sorted_genres = Genre.all.map { |genre| genre.name }.sort 
-    sorted_genres.each.with_index(1) { |genre, index| puts "#{index}. #{genre}" }
+    sorted_genres = Genre.all.sort_by { |genre| genre.name }
+    sorted_genres.each.with_index(1) { |genre, index| puts "#{index}. #{genre.name}" }
   end
   
   def list_songs_by_artist 
-    puts "Please choose an artist"
-    input = gets.chomp
+    puts "Please enter the name of an artist:"
+    input = gets.strip.downcase
+    valid = Artist.all.map { |artist| artist.name.downcase}
+    # binding.pry
+    # until valid.include?(input)
+    # puts "Please choose an artist"
+    # input = gets.strip.downcase
+    # end
     
   end
   
