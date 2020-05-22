@@ -13,6 +13,8 @@ class MusicImporter
     Dir.entries(@path).reject { |file| file[0] == '.' }
   end
   
-  
+  def import 
+    files.each { |file| Song.new_by_file_name(file) }
+  end
   
 end
