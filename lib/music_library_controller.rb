@@ -34,17 +34,15 @@ class MusicLibraryController
     
     if user_input == 'list songs'
       list_songs
-    elsif 
-      user_input == 'list artists'
+    elsif user_input == 'list artists'
       list_artists
-    elsif
-      user_input == 'list genres'
+    elsif user_input == 'list genres'
       list_genres
-    elsif
-      user_input == 'list artist'
+    elsif user_input == 'list artist'
       list_songs_by_artist
-    elsif
-      user_input == 'exit'
+    elsif user_input == 'list genre'
+      list_songs_by_genre
+    elsif user_input == 'exit'
       return
     end
     
@@ -67,18 +65,24 @@ class MusicLibraryController
   
   def list_songs_by_artist 
     puts "Please enter the name of an artist:"
-    user_input = gets.chomp
-    # valid = Artist.all.map { |artist| artist.name}
-    if Artist.find_by_name(user_input)
-      songs = Artist.find_by_name(user_input).songs.sort_by { |song| song.name } 
-      songs.each.with_index(1) { |song, index| "#{index}. #{song.name}"}
-    else 
-      list_songs_by_artist
-    end
+    user_input = gets.strip
+    # # valid = Artist.all.map { |artist| artist.name}
+    # if !Artist.find_by_name(user_input)
+    #   list_songs_by_artist
+    # else 
+    #   songs = Artist.find_by_name(user_input).songs.sort_by { |song| song.name } 
+    #   songs.each.with_index(1) { |song, index| "#{index}. #{song.name}"}
+    # end
 
   end
   
   def list_songs_by_genre 
+    puts "Please enter the name of a genre:"
+    user_input = gets.strip.downcase
+    until Genre.all.map {|genre| genre.name.downcase}.include?(user_input)
+    user_input = gets.strip.downcase
+    end
+    
   end
   
   def play_song
