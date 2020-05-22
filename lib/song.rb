@@ -36,7 +36,7 @@ class Song
     parsed = filename.split(" - ")
     artist_name = parsed[0]
     song_name = parsed[1]
-    song_genre = parsed[2].delete('.mp3')
+    song_genre = parsed[2].chomp('.mp3')
     
     artist = Artist.find_or_create_by_name(artist_name)
     song = Song.find_or_create_by_name(song_name)
