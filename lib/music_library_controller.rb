@@ -41,11 +41,10 @@ class MusicLibraryController
       user_input == 'list genres'
       list_genres
     elsif
-      user_input == 'list songs by artist'
+      user_input == 'list artist'
       list_songs_by_artist
     elsif
       user_input == 'exit'
-      # puts "Goodbye!"
       return
     end
     
@@ -68,21 +67,27 @@ class MusicLibraryController
   
   def list_songs_by_artist 
     puts "Please enter the name of an artist:"
-    input = gets.strip.downcase
-    valid = Artist.all.map { |artist| artist.name.downcase}
-    # binding.pry
-    # until valid.include?(input)
-    # puts "Please choose an artist"
-    # input = gets.strip.downcase
-    # end
-    
+    user_input = gets.chomp
+    # valid = Artist.all.map { |artist| artist.name}
+    if Artist.find_by_name(user_input)
+      Artist.find_by_name(user_input).songs 
+    else 
+      # list_songs_by_artist
+    end
+
   end
   
+  def list_songs_by_genre 
+  end
   
+  def play_song
+  end
   
+  def list_songs_by_artist
+  end
   
-  
-  
+  def list_songs_by_genre
+  end
   
   
   
