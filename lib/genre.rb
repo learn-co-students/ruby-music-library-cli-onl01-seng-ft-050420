@@ -1,7 +1,11 @@
+require_all 'lib'
+require './lib/concerns/findable'
+
 class Genre
   
   attr_accessor :name
   @@all = []
+  extend Concerns::Findable
   
   def initialize(name)
     @name = name 
@@ -9,6 +13,7 @@ class Genre
   
   def save
     @@all << self 
+    self
   end 
   
   def self.all 
@@ -25,8 +30,12 @@ class Genre
     n
   end 
   
+  def songs
+    Song.all.filter { |song| song.genre == self}
+  end
   
-  
-  
+  def artists 
+    songs.map { |song| song.artist }.uniq
+  end
   
 end
