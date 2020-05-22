@@ -5,6 +5,7 @@ class MusicLibraryController
     end
 
     def call
+        
         puts "Welcome to your music library!"
         puts "To list all of your songs, enter 'list songs'."
         puts "To list all of the artists in your library, enter 'list artists'."
@@ -76,9 +77,11 @@ class MusicLibraryController
         end
     end
 
-    def self.list_songs(path=nil)
-        instance = MusicLibraryController.new(path)
-        instance.list_songs
+    def call
+        case input
+        when 'list songs'
+            list_songs
+        end
 
     end
 
