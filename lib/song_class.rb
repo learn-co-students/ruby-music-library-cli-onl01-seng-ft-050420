@@ -1,5 +1,6 @@
 require 'pry'
 class Song 
+  extend Concerns::Findable
   attr_accessor :name, :artist, :genre
   @@all = []
   
@@ -23,30 +24,37 @@ class Song
     self
   end 
   
-  def self.create(name)
-    self.new(name)
+  def self.create(name, artist= nil, genre = nil)
+    self.new(name, artist, genre)
   end 
   
   def artist=(artist)
-    @artist = artist
+    if artist.class == Artist 
+      @artist = artist 
+    else 
+      @artist = Artist.new(artist)
+    end 
     #binding.pry
-    @artist.add_song(self)
+    
   end 
   
   def genre=(genre)
-    @genre = genre
+    if genre.class == Genre 
+      @genre = genre 
+    else 
+      @genre = Genre.new(genre)
+    end 
     @genre.songs << self if !@genre.songs.include?(self)
   end 
   
-  def self.find_by_name(name)
-    self.all.find {|song| song.name == name}
+  def self.new_from_filename(files)
+    info = files.split(" - ")
+     
+    name = info[1]
+    artist = info[0]
+    genre = info[2].chomp(".mp3")
+    Song.create(name, artist, genre)
+    
   end 
-  
-  def self.find_or_create_by_name(name)
-    if self.all.any? {|song| song.name == name} == true 
-      "does not recreate"
-    else 
-      self.create(name)
-    end 
-  end 
+
 end 

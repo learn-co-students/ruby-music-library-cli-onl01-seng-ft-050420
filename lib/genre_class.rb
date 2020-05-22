@@ -1,4 +1,5 @@
 class Genre 
+  extend Concerns::Findable
   attr_accessor :name, :songs 
   
   @@all = []
@@ -14,7 +15,7 @@ class Genre
   end 
   
   def songs 
-    @songs
+    Song.all.select {|song| song.genre == self}.uniq
   end 
   
   def self.all 
