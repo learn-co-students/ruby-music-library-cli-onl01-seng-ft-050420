@@ -14,11 +14,7 @@ class MusicImporter
   
   def import 
     files.each do |file|
-      song = Song.new(name,genre,artist)
-      info = file.split(" - ")
-      name = info[0]
-      artist = info[1]
-      genre = info[2].chomp(".mp3")
+     Song.create_from_filename(file)
     end 
   end 
 end 

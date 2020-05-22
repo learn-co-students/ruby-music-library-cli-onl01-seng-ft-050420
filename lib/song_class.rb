@@ -29,7 +29,10 @@ class Song
   end 
   
   def artist=(artist)
-    if artist.class == Artist || Artist.find_by_name(artist)
+   
+    if artist.class == Artist  
+      @artist = artist 
+    elsif Artist.find_or_create_by_name(artist)
       @artist = Artist.find_by_name(artist)
     else 
       @artist = Artist.new(artist)
@@ -41,20 +44,22 @@ class Song
   def genre=(genre)
     if genre.class == Genre 
       @genre = genre 
+    elsif Genre.find_or_create_by_name(genre)
+      @genre = Genre.find_by_name(genre)
     else 
       @genre = Genre.new(genre)
     end 
-    @genre.songs << self if !@genre.songs.include?(self)
   end 
   
   def self.new_from_filename(files)
     info = files.split(" - ")
-     
     name = info[1]
     artist = info[0]
     genre = info[2].chomp(".mp3")
     Song.create(name, artist, genre)
-    
   end 
-
+  
+  def self.create_from_filename(file)
+    self.new_from_filename(file)
+  end 
 end 
