@@ -39,7 +39,7 @@ class Song
     song_genre = parsed[2].chomp('.mp3')
     
     artist = Artist.find_or_create_by_name(artist_name)
-    song = Song.find_or_create_by_name(song_name)
+    # song = Song.find_or_create_by_name(song_name)
     genre = Genre.find_or_create_by_name(song_genre)
     
     self.new(song_name, artist, genre)
