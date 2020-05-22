@@ -37,9 +37,10 @@ class Song
   
   def new_from_filename(file)
     
+    
   end 
   
-  def create_from_file(file)
+  def create_from_filename(files)
     files.collect do |file |
       file.split(" - ")
       name = file[1]
@@ -51,15 +52,15 @@ class Song
   
   
   
-  def find_by_name(song_name)
+  def find_by_name
     @@all.find do |song|
-      song.name == song_name
+      song.name == self
     end 
   end
   
-  def find_or_create_by_name (song_name)
+  def find_or_create_by_name
     
-    find_by_name(song_name) || self.create
+    find_by_name || self.create
     
   end 
   

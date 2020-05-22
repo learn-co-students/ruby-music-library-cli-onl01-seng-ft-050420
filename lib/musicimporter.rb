@@ -10,9 +10,12 @@ class MusicImporter
   end 
   
   def files(path)
-    files = Dir.entries(path).delete_if { |s| s == " " && s == "." && ","}
+    files = Dir.entries(path).delete_if { |s| s == " "  &&  s == "."  &&  s == ","}
   end
   
   def self.import
-  end 
+    files.each do |file| 
+      Song.new_by_filename(file)
+    end 
+  end
 end 
