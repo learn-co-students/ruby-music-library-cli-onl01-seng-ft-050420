@@ -1,3 +1,5 @@
+require 'pry'
+
 class Genre 
   
   extend Concerns::Findable
@@ -9,9 +11,9 @@ class Genre
   
   def initialize(name)
     @name = name 
-    @song = []
     save
   end 
+  
   
   def self.all 
     @@all
@@ -35,13 +37,16 @@ class Genre
   
   def songs 
     Song.all.select{ |song| song.genre == self }.uniq
+    
   end 
   
   def artists 
     
-    self.songs.collect{ |song| song.artist}.uniq
+    songs.collect{ |song| song.artist}.uniq
     
   end
+  
+  
   
   
 end

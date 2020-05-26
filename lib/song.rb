@@ -1,4 +1,4 @@
-
+require 'pry'
 
 class Song 
   
@@ -18,6 +18,7 @@ class Song
   
   def self.all 
     @@all
+    
   end 
   
   def save 
@@ -55,9 +56,9 @@ class Song
   
   
   def self.create_from_filename(file)
-    self.new_from_filename(file)
+    new_song = self.new_from_filename(file)
+    
   end 
-  
   
   
   

@@ -10,6 +10,7 @@ class Artist
   
   def initialize(name)
     @name = name 
+    
     save
   end 
   
@@ -38,13 +39,15 @@ class Artist
       song.artist = self
     end 
     if !self.songs.include?(song)
-      @songs << song 
+      @@all << song 
     end
   end
 
   
   def songs 
-    Song.all.select{ |song| song.artist = self }.uniq
+    
+    
+    Song.all.select{ |song| song.artist == self }.uniq
   end
   
   
