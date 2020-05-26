@@ -1,4 +1,8 @@
+require 'pry'
+
 class Artist 
+  
+  extend Concerns::Findable
   
   attr_accessor :name 
   
@@ -6,7 +10,7 @@ class Artist
   
   def initialize(name)
     @name = name 
-    @songs = []
+    save
   end 
   
   def self.all 
@@ -15,46 +19,38 @@ class Artist
   
   def save 
     @@all << self
-    self
+    
   end 
   
   def self.destroy_all 
     @@all.clear
   end 
   
-  def self.create
-    self.new
-    save
+  def self.create(artist_name)
+    artist_inst = self.new(artist_name)
+    artist_inst.save
+    artist_inst
+    
   end
   
-  def add_song(song_instance)
-    if song_instance.artist == nil
-      song_instance.artist = self
+  def add_song(song)
+    if song.artist == nil
+      song.artist = self
+    end 
+    if !self.songs.include?(song)
+      @songs << song 
     end
-    
-    @@song.find { |song| song_instance == song } || @@songs << song_instance
   end
+
   
   def songs 
-    Song.all.collect { | song| song.name = self }
+    Song.all.select{ |song| song.artist = self }.uniq
   end
-  
-  
-  
-  
   
   
   def genres 
+    genre_arr = Song.all.collect { |song| song.genre }.uniq
     
   end 
-  
-  
-  
-   
-   
-    
-  
-  
-  
   
 end
