@@ -49,25 +49,22 @@ class MusicLibraryController
       
     end
     
-    
-   
   end 
   
   
-  
-  
-  
   def list_artists
-    sorted_song = Song.all.sort_by {|s| s.artist.name}
-    sorted_song.each.with_index(1) do |song, index|
+    sorted_songs = Song.all.sort_by{|s| s.artist.name}
+    sorted_songs.sort_by{|s| s.artist.name}.each.with_index(1) do |song, index|
+      #binding.pry
       puts "#{index}. #{song.artist.name}"
     end
   end 
   
   
   def list_genres
-    sorted_song = Song.all.sort_by {|s| s.genre.name}
-    sorted_song.each.with_index(1) do |song, index|
+    sorted_songs = Song.all.sort_by {|s| s.genre.name}
+    #binding.pry
+    sorted_songs.each.with_index(1) do |song, index|
       puts "#{index}. #{song.genre.name}"
     end
     
@@ -91,6 +88,7 @@ class MusicLibraryController
     input = gets.chomp
     
     if genre = Genre.find_by_name(input)
+      
       sorted_songs = genre.songs.sort_by {|s| s.name }
       sorted_songs.each.with_index(1) {|song,index|  puts "#{index}. #{song.artist.name} - #{song.name}"}
     end
