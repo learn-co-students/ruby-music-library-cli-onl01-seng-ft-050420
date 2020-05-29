@@ -53,19 +53,20 @@ class MusicLibraryController
   
   
   def list_artists
-    sorted_songs = Song.all.sort_by{|s| s.artist.name}
-    sorted_songs.sort_by{|s| s.artist.name}.each.with_index(1) do |song, index|
-      #binding.pry
-      puts "#{index}. #{song.artist.name}"
+    sorted_artists = Artist.all.sort_by{|a| a.name}
+    # binding.pry
+    sorted_artists.each.with_index(1) do |artist, index|
+      
+      puts "#{index}. #{artist.name}"
     end
   end 
   
   
   def list_genres
-    sorted_songs = Song.all.sort_by {|s| s.genre.name}
+    sorted_genres = Genre.all.sort_by {|g| g.name}
     #binding.pry
-    sorted_songs.each.with_index(1) do |song, index|
-      puts "#{index}. #{song.genre.name}"
+    sorted_genres.each.with_index(1) do |genre, index|
+      puts "#{index}. #{genre.name}"
     end
     
   end 
