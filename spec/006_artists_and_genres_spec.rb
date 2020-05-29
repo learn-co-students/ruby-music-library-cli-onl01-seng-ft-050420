@@ -1,61 +1,69 @@
 require "spec_helper"
 
-describe "Associations — Artist and Genre:" do
+describe "Associations — Song and Genre:" do
+  let(:song) { Song.new("In the Aeroplane Over the Sea") }
   let(:genre) { Genre.new("indie rock") }
-  let(:other_genre) { Genre.new("electro pop") }
-  let(:artist) { Artist.new("The Magnetic Fields") }
-  let(:other_artist) { Artist.new("Neutral Milk Hotel") }
 
-  context "Artist" do
-    describe "#genres" do
-      it "returns a collection of genres for all of the artist's songs (artist has many genres through songs)" do
-        Song.new("The Luckiest Guy on the Lower East Side", artist, genre)
-        Song.new("Long-Forgotten Fairytale", artist, other_genre)
+  context "Genre" do
 
-        expect(artist.genres).to include(genre)
-        expect(artist.genres).to include(other_genre)
-        expect(artist.genres.size).to be(2)
-      end
+    describe "#songs" do
+      it "returns the genre's 'songs' collection (genre has many songs)" do
+        expect(genre.songs).to eq([])
 
-      it "does not return duplicate genres if the artist has more than one song of a particular genre (artist has many genres through songs)" do
-        Song.new("In the Aeroplane Over the Sea", other_artist, genre)
-        Song.new("Two-Headed Boy", other_artist, genre)
+        song.genre = genre
+        song.save
 
-        expect(other_artist.genres).to include(genre)
-        expect(other_artist.genres.size).to eq(1)
-      end
-
-      it "collects genres through its songs instead of maintaining its own @genres instance variable (artist has many genres through songs)" do
-        Song.new("In the Aeroplane Over the Sea", other_artist, genre)
-
-        expect(other_artist.instance_variable_defined?(:@genres)).to be_falsey
+        expect(genre.songs).to include(song)
       end
     end
   end
 
-  context "Genre" do
-    describe "#artists" do
-      it "returns a collection of artists for all of the genre's songs (genre has many artists through songs)" do
-        Song.new("The Luckiest Guy on the Lower East Side", artist, genre)
-        Song.new("In the Aeroplane Over the Sea", other_artist, genre)
+  context "Song" do
+    describe "#initialize" do
+      it "can be invoked with an optional third argument, a Genre object to be assigned to the song's 'genre' property (song belongs to genre)" do
+        artist = Artist.new("Neutral Milk Hotel")
+        song_with_artist_and_genre = Song.new("In the Aeroplane Over the Sea", artist, genre).save
 
-        expect(genre.artists).to include(artist)
-        expect(genre.artists).to include(other_artist)
-        expect(genre.artists.size).to be(2)
+        expect(song_with_artist_and_genre.instance_variable_defined?(:@genre)).to be(true)
+        expect(song_with_artist_and_genre.instance_variable_get(:@genre)).to be(genre)
+      end
+    end
+
+    describe "#genre" do
+      it "returns the genre of the song (song belongs to genre)" do
+        song.instance_variable_set(:@genre, genre)
+
+        expect(song.genre).to be(genre)
+      end
+    end
+
+    describe "#genre=" do
+      it "assigns a genre to the song (song belongs to genre)" do
+        song.genre = genre
+
+        expect(song.genre).to be(genre)
       end
 
-      it "does not return duplicate artists if the genre has more than one song by a particular artist (genre has many artists through songs)" do
-        Song.new("In the Aeroplane Over the Sea", other_artist, genre)
-        Song.new("Two-Headed Boy", other_artist, genre)
-
-        expect(genre.artists).to include(other_artist)
-        expect(genre.artists.size).to eq(1)
+      it "adds the song to the genre's collection of songs (genre has many songs)" do
+        song.genre = genre
+        song.save
+        expect(genre.songs).to include(song)
       end
 
-      it "collects artists through its songs instead of maintaining its own @artists instance variable (genre has many artists through songs)" do
-        Song.new("In the Aeroplane Over the Sea", other_artist, genre)
+      it "does not add the song to the genre's collection of songs if it already exists therein" do
+        2.times { song.genre = genre }
+        song.save
+        expect(genre.songs).to include(song)
+        expect(genre.songs.size).to be(1)
+      end
+    end
 
-        expect(genre.instance_variable_defined?(:@artists)).to be_falsey
+    describe "#initialize" do
+      it "invokes #genre= instead of simply assigning to a @genre instance variable to ensure that associations are created upon initialization" do
+        artist = Artist.new("Neutral Milk Hotel")
+
+        expect_any_instance_of(Song).to receive(:genre=).with(genre)
+        Song.new("In the Aeroplane Over the Sea", artist, genre)
       end
     end
   end
