@@ -4,10 +4,12 @@ class Song
   
   extend Concerns::Findable
   
-  attr_accessor :name, :artist, :genre
+  attr_accessor :name, :artist, :genre 
+   
   
   
   @@all = []
+  
   
   def initialize(name, artist = nil, genre = nil)
     @name = name 
@@ -15,6 +17,18 @@ class Song
     self.genre = genre if genre != nil
     save
   end 
+  
+  
+  # def genre=(genre)
+  #   genre.songs << self unless genre.songs.include?(self)
+  #   @genre = genre
+  # end 
+  
+  # def artist=(artist)
+  #   artist.songs << self unless artist.songs.include?(self)
+  #   @artist = artist
+  # end 
+  
   
   def self.all 
     @@all
@@ -34,7 +48,6 @@ class Song
   
   def self.create(name)
     song_inst = self.new(name)
-    song_inst.save
     song_inst
   end
   
@@ -60,7 +73,7 @@ class Song
     
   end 
   
-  
+ 
   
   
   

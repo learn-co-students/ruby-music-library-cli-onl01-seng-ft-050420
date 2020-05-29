@@ -38,15 +38,13 @@ class Artist
     if song.artist == nil
       song.artist = self
     end 
-    if !self.songs.include?(song)
-      @@all << song 
-    end
+    # if !self.songs.include?(song)
+    #   @@all << song.artist 
+    # end
   end
 
   
   def songs 
-    
-    
     Song.all.select{ |song| song.artist == self }.uniq
   end
   
